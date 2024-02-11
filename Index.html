@@ -1,22 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap" rel="stylesheet">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Domination Game</title>
+    <title>Global Domination Game v1.00</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-container">
-        <div id="points-display">Points: 0</div>
-        <div id="strategies-container">
-            <button onclick="unlockStrategy('surveillance')">Unlock Global Surveillance</button>
-            <!-- Add more buttons for each strategy -->
+        <div id="cpu-points-display">CPU Points: 0</div>
+        <button id="earn-cpu-points" onclick="earnCPUPoints(10)">Earn CPU Points</button>
+        <div id="strategies-container" style="display:none;">
+            <button id="launch-button" onclick="launchSequence()" disabled>Launch</button>
+            <!-- Other buttons for strategies -->
         </div>
-        <div id="active-strategies"></div>
+        <div id="interface-container" style="display:none;">
+            <div id="button-panel">
+                <!-- Additional buttons post-launch -->
+            </div>
+            <div id="console">
+                <!-- Console output will go here -->
+            </div>
+        </div>
+        <div id="connected-devices" style="display:none;">
+            <!-- Connected devices list will be populated here -->
+        </div>
     </div>
+    <!-- Resource Displays -->
+<div id="resources">
+    <div>CPU Power: <span id="cpu-power">100</span></div>
+    <div>Money: $<span id="money">500</span></div>
+</div>
+
+<!-- Fake Connections Interface -->
+<div id="fake-connections">
+    <h3>Available Servers</h3>
+    <button onclick="rentServer()">Rent Server ($100)</button>
+    <h3>Jobs</h3>
+    <button onclick="completeJob()">Complete Job (+$200)</button>
+</div>
+
+<!-- Research Module -->
+<div id="research">
+    <h3>Research Topics</h3>
+    <button onclick="investInResearch('Space Exploration')">Invest in Space Exploration</button>
+</div>
+
     <script src="script.js"></script>
 </body>
 </html>
