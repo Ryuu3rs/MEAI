@@ -2,24 +2,33 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    /* Set the background to black */
     background-color: black;
-    /* Create a repeating linear gradient with green lines and spacing */
-    background-image: repeating-linear-gradient(to right, rgba(0,255,0,0.5) 0px, rgba(0,255,0,0.8) 2px, transparent 2px, transparent 10px);
-    /* Apply a blur effect to the background */
-    filter: blur(2px);
+    overflow-x: hidden; /* Prevent horizontal scroll from blur */
 }
 
 #game-container {
     text-align: center;
     padding: 20px;
-    /* Prevent the blur effect from affecting the content */
-    backdrop-filter: blur(2px);
     color: white; /* Ensure text is visible on the dark background */
+    position: relative; /* Setup for absolute positioning */
+    overflow: hidden; /* Ensure no overflow from pseudo elements */
 }
 
-#points-display {
-    margin-bottom: 20px;
+#game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: repeating-linear-gradient(to right, rgba(0,255,0,0.5) 0px, rgba(0,255,0,0.8) 2px, transparent 2px, transparent 12px);
+    filter: blur(2px);
+    z-index: 0;
+}
+
+#points-display, #strategies-container, #active-strategies {
+    position: relative;
+    z-index: 1; /* Ensure content is above the blurred background */
 }
 
 #strategies-container button {
