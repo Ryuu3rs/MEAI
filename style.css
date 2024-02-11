@@ -1,0 +1,18 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#game-container {
+    text-align: center;
+    padding: 20px;
+}
+
+#points-display {
+    margin-bottom: 20px;
+}
+
+#strategies-container button {
+    margin: 5px;
+}
