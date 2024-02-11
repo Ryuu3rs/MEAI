@@ -21,8 +21,9 @@ body, html {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: repeating-linear-gradient(to right, rgba(0,255,0,0.5) 0px, rgba(0,255,0,0.8) 2px, transparent 2px, transparent 12px);
-    filter: blur(2px);
+    /* Adjusted gradient for larger gap and more prominent fade effect */
+    background-image: repeating-linear-gradient(to right, rgba(0,255,0,0.5) 0px, rgba(0,255,0,0.8) 4px, transparent 4px, transparent 24px);
+    filter: blur(4px); /* Increased blur effect */
     z-index: 0;
 }
 
@@ -41,4 +42,26 @@ body, html {
 
 #strategies-container button:hover {
     background-color: #333; /* Lighter background on hover */
+}
+@keyframes moveLines {
+    0% { background-position: 0 0; }
+    100% { background-position: 100px 0; }
+}
+
+#game-container::before {
+    animation: moveLines 10s linear infinite;
+}
+body, html {
+    font-family: 'Orbitron', sans-serif;
+}
+#strategies-container button {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#strategies-container button:hover {
+    background-color: #0f0; /* Change as needed */
+    transform: scale(1.05);
+}
+#strategies-container button {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Green glow */
 }
