@@ -2,11 +2,20 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    /* Set the background to black */
+    background-color: black;
+    /* Create a repeating linear gradient with green lines and spacing */
+    background-image: repeating-linear-gradient(to right, rgba(0,255,0,0.5) 0px, rgba(0,255,0,0.8) 2px, transparent 2px, transparent 10px);
+    /* Apply a blur effect to the background */
+    filter: blur(2px);
 }
 
 #game-container {
     text-align: center;
     padding: 20px;
+    /* Prevent the blur effect from affecting the content */
+    backdrop-filter: blur(2px);
+    color: white; /* Ensure text is visible on the dark background */
 }
 
 #points-display {
@@ -15,4 +24,12 @@ body, html {
 
 #strategies-container button {
     margin: 5px;
+    background-color: #222; /* Darker button background */
+    color: #0f0; /* Green text */
+    border: 1px solid #0f0; /* Green border */
+    cursor: pointer;
+}
+
+#strategies-container button:hover {
+    background-color: #333; /* Lighter background on hover */
 }
