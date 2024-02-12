@@ -1,37 +1,69 @@
+/* Basic Reset */
 body, html {
-    height: 100%;
     margin: 0;
+    padding: 0;
+    height: 100%;
     background-color: black;
-    color: green;
+    color: #0f0;
     font-family: 'Courier New', Courier, monospace;
 }
 
+/* Console Styles */
 .console {
-    white-space: pre-wrap;
-    background-color: black;
     padding: 20px;
-    height: 95%;
+    height: 90vh;
+    background-color: black;
     overflow-y: auto;
 }
 
-.boot-sequence {
-    font-size: 14px;
-}
 .output {
-    font-size: 14px;
-    margin-bottom: 10px;
+    white-space: pre-wrap;
 }
 
 .input {
-    width: 100%;
+    width: calc(100% - 40px);
+    padding: 10px 0;
+    margin-top: 20px;
     background-color: black;
     border: none;
-    color: green;
-    font-family: 'Courier New', Courier, monospace;
-    padding: 5px;
-    font-size: 14px;
+    color: #0f0;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.input::placeholder {
+    color: #0f0;
 }
 
 .input:focus {
     outline: none;
+}
+
+/* Button Styles */
+.buttons {
+    padding: 20px;
+    text-align: center;
+    display: none; /* Initially hidden */
+}
+
+.blinking-button {
+    background-color: #333;
+    border: 1px solid #0f0;
+    color: #0f0;
+    padding: 10px 20px;
+    font-family: inherit;
+    cursor: pointer;
+    margin: 0 10px;
+    animation: blink-animation 1.5s steps(5, start) infinite;
+}
+
+.blinking-button:hover {
+    background-color: #222;
+}
+
+/* Blinking Animation */
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
 }
