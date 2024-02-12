@@ -21,8 +21,8 @@ body, html {
 }
 
 .console {
-    flex-basis: 60%; /* Adjust this value to control the console's width */
-    max-width: 60%; /* Prevent the console from exceeding half of the game container's width */
+    flex-basis: 80%; /* Adjust this value to control the console's width */
+    max-width: 90%; /* Prevent the console from exceeding half of the game container's width */
     height: auto; /* Adjust height automatically based on content up to the max-height of the container */
     aspect-ratio: 1 / 1; /* Attempt to maintain a square aspect ratio */
     border: 2px solid #0f0;
