@@ -70,20 +70,20 @@ function showButtonForSystem(systemIndex) {
 }
 
 // Function to simulate the loading of each system with a progress bar
-function loadSystem(output, systemIndex, systems, callback) {
-    if (systemIndex < systems.length) {
-        const system = systems[systemIndex];
-        const duration = Math.random() * (5000 - 1000) + 1000; // Random duration between 1s and 5s for variety
-        displayLoadingBar(output, system, duration, () => {
-            showButtonForSystem(systemIndex); // Show corresponding button for the system once it's loaded
-            systemIndex++;
-            if (systemIndex < systems.length) {
-                loadSystem(output, systemIndex, systems, callback); // Load the next system
-            } else {
-                callback(); // All systems loaded, proceed to next step
-            }
-        });
+function loadSystem(output, systems, currentIndex, callback) {
+    if (currentIndex >= systems.length) {
+        callback(); // All systems loaded, call the final callback
+        return;
     }
+
+    const system = systems[currentIndex];
+    console.log(`Loading: ${system}`); // Debugging: Log which system is loading
+    const duration = Math.random() * (5000 - 1000) + 1000; // Random duration for the loading bar
+
+    displayLoadingBar(output, system, duration, () => {
+        // Once the loading bar for the current system completes, move to the next one
+        loadSystem(output, systems, currentIndex + 1, callback);
+    });
 }
 
 // Starts the detailed boot sequence
