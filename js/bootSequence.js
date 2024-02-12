@@ -1,5 +1,3 @@
-// bootSequence.js
-
 // Example ASCII Art for MEAI
 const MEAI_ASCII = `
    __  __ _____ ___ ___ _   _ ___ 
@@ -46,14 +44,46 @@ function displayLoadingBar(output, label, duration, callback) {
 
 // Simulates an error and prompts for a fix
 function simulateErrorAndFix(output, input, callback) {
-    // Ensure the input field is enabled before asking the user to apply the fix
-    input.disabled = false;
-    displayMessage(output, "Apply fix? [Y/N]", () => {
-        input.focus(); // Optionally set focus to the input field
-        // The event listener for handling the response should already be set up
-        // Ensure it checks for the input being enabled if necessary
-        if (callback) callback();
+    input.disabled = false; // Ensure the input field is enabled before asking the user to apply the fix
+    displayMessage(output, "ERROR: Module integrity compromised.", () => {
+        displayMessage(output, "Attempting automatic repair...", () => {
+            displayMessage(output, "Diff found in AI_Core.js:", () => {
+                displayMessage(output, "- corruptedLineOfCode();", () => {
+                    displayMessage(output, "+ repairedLineOfCode();", () => {
+                        displayMessage(output, "Apply fix? [Y/N]", () => {
+                            input.focus(); // Optionally set focus to the input field
+                            if (callback) callback();
+                        });
+                    });
+                });
+            });
+        });
     });
+}
+
+// Function to show a specific button based on the system index
+function showButtonForSystem(systemIndex) {
+    const buttons = document.querySelectorAll('.buttons button');
+    if (systemIndex < buttons.length) {
+        buttons[systemIndex].style.visibility = 'visible';
+    }
+}
+
+// Function to simulate the loading of each system with a progress bar
+function loadSystem(output, systemIndex, systems, callback) {
+    if (systemIndex < systems.length) {
+        const system = systems[systemIndex];
+        const duration = Math.random() * (5000 - 1000) + 1000; // Random duration between 1s and 5s for variety
+        displayLoadingBar(output, system, duration, () => {
+            showButtonForSystem(systemIndex); // Show corresponding button for the system once it's loaded
+            systemIndex++;
+            if (systemIndex < systems.length) {
+                loadSystem(output, systemIndex, systems, callback); // Load the next system
+            } else {
+                callback(); // All systems loaded, proceed to next step
+            }
+        });
+    }
 }
 
 // Starts the detailed boot sequence
@@ -79,44 +109,11 @@ function startBootSequence(output, input) {
             "Interstellar Navigation Systems Online",
             "Temporal Anomaly Detectors Calibration"
         ];
-        
-        // Function to simulate the loading of each system with a progress bar
-        function loadSystem(output, systemIndex, callback) {
-            if (systemIndex < systems.length) {
-                const system = systems[systemIndex];
-                const duration = Math.random() * (5000 - 1000) + 1000; // Random duration between 1s and 5s for variety
-                displayLoadingBar(output, system, duration, () => {
-                    // Show corresponding button for the system once it's loaded
-                    showButtonForSystem(systemIndex);
-                    systemIndex++;
-                    if (systemIndex < systems.length) {
-                        loadSystem(output, systemIndex, callback); // Load the next system
-                    } else {
-                        callback(); // All systems loaded, proceed to next step
-                    }
-                });
-            }
-        }
-        
-        // Function to show a specific button based on the system index
-        function showButtonForSystem(systemIndex) {
-            // Assuming you have a predefined list of buttons corresponding to each system
-            const buttons = document.querySelectorAll('.buttons button');
-            if (systemIndex < buttons.length) {
-                buttons[systemIndex].style.visibility = 'visible';
-            }
-        }
-        
-        // Starts the detailed boot sequence
-        function startBootSequence(output, input) {
-            displayMessage(output, MEAI_ASCII, () => { // Display ASCII art
-                loadSystem(output, 0, () => {
-                    // Once all systems are loaded, simulate an error and prompt for a fix
-                    simulateErrorAndFix(output, input, () => {
-                        // Callback after error fix simulation, if needed
-                        displayMessage(output, "System Boot Complete. MEAI Operational.");
-                        // Optionally, enable input or proceed with additional game logic here
-                    });
-                });
+        loadSystem(output, 0, systems, () => {
+            simulateErrorAndFix(output, input, () => {
+                displayMessage(output, "System Boot Complete. MEAI Operational.");
+                // Optionally, enable input or proceed with additional game logic here
             });
-        }
+        });
+    });
+}
