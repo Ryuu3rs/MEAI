@@ -13,51 +13,48 @@ body, html {
 
 #game-container {
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    width: 80%;
+    width: 100%;
     max-width: 1200px; /* Adjust based on your preference */
-    margin: auto;
+    height: 80vh; /* Adjust the height of the game container */
+    align-items: stretch; /* Ensure children (console and buttons) fill the container height */
 }
 
-/* Console Styles */
 .console {
+    flex: 1 1 50%; /* Take up half of the container width */
     border: 2px solid #0f0; /* Adds a border around the console */
+    margin-right: 20px; /* Space between console and buttons */
     padding: 20px;
-    width: 60%; /* Adjust based on your preference */
-    height: 80vh;
-    background-color: black;
+    box-sizing: border-box;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .output {
+    flex-grow: 1;
     white-space: pre-wrap;
 }
 
 .input {
-    width: calc(100% - 40px);
-    padding: 10px 0;
+    margin-top: 10px;
+    padding: 10px;
     background-color: black;
-    border: none;
+    border: 1px solid #0f0;
     color: #0f0;
     font-family: inherit;
-    font-size: 16px;
+    width: calc(100% - 22px); /* Adjust width to account for padding and border */
 }
 
-.input::placeholder {
-    color: #0f0;
-}
-
-.input:focus {
-    outline: none;
-}
-
-/* Button Styles */
 .buttons {
+    flex: 1 1 50%; /* Take up the remaining half of the container width */
     display: flex;
     flex-direction: column;
     padding: 20px;
-    margin-right: 20px; /* Space between buttons and console */
+    box-sizing: border-box;
+    justify-content: flex-start; /* Align buttons to the top */
+    align-items: flex-start; /* Align buttons to the left */
+    visibility: hidden; /* Initially hide buttons until boot sequence is complete */
 }
 
 .blinking-button {
@@ -68,11 +65,16 @@ body, html {
     font-family: inherit;
     cursor: pointer;
     margin-bottom: 10px; /* Space between buttons */
-    animation: blink-animation 1.5s steps(5, start) 1;
+    width: 100%; /* Make buttons full width of their container */
+    text-align: left;
 }
 
 @keyframes blink-animation {
     0% { opacity: 1; }
     50% { opacity: 0; }
     100% { opacity: 1; }
+}
+
+.blinking-button {
+    animation: blink-animation 1.5s steps(5, start) 1; /* Adjust as needed for the blink effect */
 }

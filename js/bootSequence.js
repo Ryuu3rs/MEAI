@@ -24,6 +24,8 @@ function displayMessage(output, message, callback) {
         output.scrollTop = output.scrollHeight; // Keep scrolling to the bottom
     }, 20); // Speed of text appearance
 }
+// Assuming this is part of your boot sequence completion logic
+document.querySelector('.buttons').style.visibility = 'visible';
 
 // Function to display a loading bar with a percentage
 function displayLoadingBar(output, label, duration, callback) {
