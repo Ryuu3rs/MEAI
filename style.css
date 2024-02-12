@@ -75,7 +75,7 @@ body::before, body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -1; /* Keep the green lines in the background */
 }
 
 body::before {
@@ -89,3 +89,8 @@ body::after {
     filter: blur(4px);
 }
 
+#console, #interface-container {
+    z-index: 1; /* Make these elements appear on top of the green lines */
+    position: relative; /* This is necessary for z-index to take effect */
+    /* Rest of your styles... */
+}
