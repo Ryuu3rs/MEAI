@@ -21,6 +21,18 @@ body::before {
     height: 100%;
     background-image: repeating-linear-gradient(to bottom, rgba(0, 255, 0, 0.5) 0px, rgba(0, 255, 0, 0.8) 2px, transparent 2px, transparent 22px);
     animation: moveLines 10s linear infinite;
+    z-index: -1;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(to bottom, rgba(0, 255, 0, 0.5) 0px, rgba(0, 255, 0, 0.8) 2px, transparent 2px, transparent 22px);
+    animation: moveLines 10s linear infinite;
     filter: blur(4px);
     z-index: -1;
 }
@@ -28,6 +40,8 @@ body::before {
 #game-container {
     text-align: center;
     padding: 20px;
+    z-index: 1;
+    position: relative;
 }
 
 #interface-container, #fake-connections, #research, #resources, #connected-devices {
@@ -37,6 +51,8 @@ body::before {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid limegreen;
+    z-index: 1;
+    position: relative;
 }
 
 #console {
@@ -47,6 +63,8 @@ body::before {
     padding: 10px;
     margin-top: 20px;
     border: 1px solid limegreen;
+    z-index: 1;
+    position: relative;
 }
 
 #strategies-container button, #fake-connections button, #research button {
@@ -66,31 +84,4 @@ body::before {
 
 h3 {
     color: #0f0;
-}
-
-body::before, body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Keep the green lines in the background */
-}
-
-body::before {
-    background-image: repeating-linear-gradient(to bottom, rgba(0, 255, 0, 0.5) 0px, rgba(0, 255, 0, 0.8) 2px, transparent 2px, transparent 22px);
-    animation: moveLines 10s linear infinite;
-}
-
-body::after {
-    background-image: repeating-linear-gradient(to bottom, rgba(0, 255, 0, 0.5) 0px, rgba(0, 255, 0, 0.8) 2px, transparent 2px, transparent 22px);
-    animation: moveLines 10s linear infinite;
-    filter: blur(4px);
-}
-
-#console, #interface-container {
-    z-index: 1; /* Make these elements appear on top of the green lines */
-    position: relative; /* This is necessary for z-index to take effect */
-    /* Rest of your styles... */
 }
