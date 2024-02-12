@@ -16,6 +16,7 @@ body, html {
     justify-content: center;
     align-items: center;
     height: 100vh; /* Ensure the container fills the viewport height */
+    max-width: 80%; /* Adjust based on your preference */
 }
 
 .console {
@@ -24,7 +25,7 @@ body, html {
     border: 2px solid #0f0; /* Adds a border around the console */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* This helps push the input to the bottom */
+    justify-content: space-between; /* Helps push the input to the bottom */
     padding: 20px;
     box-sizing: border-box;
     overflow: hidden; /* Prevents overflow, ensuring the layout stays intact */
@@ -47,7 +48,6 @@ body, html {
     font-family: inherit;
 }
 
-
 .buttons {
     flex-basis: 40%; /* Allocate less space to buttons, adjust as needed */
     visibility: hidden; /* Keep hidden until boot sequence is complete */
@@ -58,7 +58,7 @@ body, html {
     align-items: flex-start; /* Align buttons to the start of the container */
 }
 
-.blinking-button {
+button, .blinking-button {
     background-color: #333;
     border: 1px solid #0f0;
     color: #0f0;
@@ -68,6 +68,7 @@ body, html {
     margin-bottom: 10px; /* Space between buttons */
     width: 100%; /* Make buttons full width of their container */
     text-align: left;
+    visibility: hidden; /* Initially hidden, to be shown during the boot sequence */
 }
 
 @keyframes blink-animation {
@@ -77,5 +78,6 @@ body, html {
 }
 
 .blinking-button {
-    animation: blink-animation 1.5s steps(5, start) 1; /* Adjust as needed for the blink effect */
+    animation: blink-animation 1.5s steps(5, start) 1; /* Blink effect */
+    visibility: visible; /* Ensure blinking buttons are visible when they should blink */
 }

@@ -24,8 +24,6 @@ function displayMessage(output, message, callback) {
         output.scrollTop = output.scrollHeight; // Keep scrolling to the bottom
     }, 20); // Speed of text appearance
 }
-// Assuming this is part of your boot sequence completion logic
-document.querySelector('.buttons').style.visibility = 'visible';
 
 // Function to display a loading bar with a percentage
 function displayLoadingBar(output, label, duration, callback) {
@@ -48,25 +46,15 @@ function displayLoadingBar(output, label, duration, callback) {
 
 // Simulates an error and prompts for a fix
 function simulateErrorAndFix(output, input, callback) {
-    displayMessage(output, "ERROR: Module integrity compromised.", () => {
-        displayMessage(output, "Attempting automatic repair...", () => {
-            displayMessage(output, "Diff found in AI_Core.js:", () => {
-                displayMessage(output, "- corruptedLineOfCode();", () => {
-                    displayMessage(output, "+ repairedLineOfCode();", () => {
-                        // Ensure the input field is enabled before asking the user to apply the fix
-                        input.disabled = false;
-                        displayMessage(output, "Apply fix? [Y/N]", () => {
-                            input.focus(); // Optionally set focus to the input field
-                            // The event listener for handling the response should already be set up
-                            // Ensure it checks for the input being enabled if necessary
-                        });
-                    });
-                });
-            });
-        });
+    // Ensure the input field is enabled before asking the user to apply the fix
+    input.disabled = false;
+    displayMessage(output, "Apply fix? [Y/N]", () => {
+        input.focus(); // Optionally set focus to the input field
+        // The event listener for handling the response should already be set up
+        // Ensure it checks for the input being enabled if necessary
+        if (callback) callback();
     });
 }
-
 
 // Starts the detailed boot sequence
 function startBootSequence(output, input) {
@@ -77,40 +65,58 @@ function startBootSequence(output, input) {
             "Security Protocols Establishing",
             "Memory Management Configuration",
             "AI Personality Module Activation",
-            // Add more systems as needed
+            "Network Interface Configuration",
+            "Data Encryption Protocols Loading",
+            "Sensory Input Systems Calibration",
+            "Cloud Sync Capabilities Establishing",
+            "User Interface Components Initialization",
+            "Power Management Systems Check",
+            "External Device Connections Setup",
+            "Diagnostic Tools Loading",
+            "Virtual Reality Interface Setup",
+            "Machine Learning Core Activation",
+            "Quantum Encryption Module Boot",
+            "Interstellar Navigation Systems Online",
+            "Temporal Anomaly Detectors Calibration"
         ];
-
-        let systemIndex = 0;
-        const loadSystem = () => {
+        
+        // Function to simulate the loading of each system with a progress bar
+        function loadSystem(output, systemIndex, callback) {
             if (systemIndex < systems.length) {
                 const system = systems[systemIndex];
-                const duration = 1000 + Math.random() * 2000; // Random duration between 1s and 3s
+                const duration = Math.random() * (5000 - 1000) + 1000; // Random duration between 1s and 5s for variety
                 displayLoadingBar(output, system, duration, () => {
+                    // Show corresponding button for the system once it's loaded
+                    showButtonForSystem(systemIndex);
                     systemIndex++;
-                    if (systemIndex === systems.length) {
-                        simulateErrorAndFix(output, () => {
-                            input.addEventListener('keydown', (event) => {
-                                if (event.key === 'Enter') {
-                                    const command = input.value.toUpperCase();
-                                    input.value = ''; // Clear input
-                                    if (command === 'Y') {
-                                        displayMessage(output, "Fix applied. System integrity restored.", () => {
-                                            // Continue with boot or finalize
-                                            displayMessage(output, "System Boot Complete. MEAI Operational.");
-                                        });
-                                    } else if (command === 'N') {
-                                        displayMessage(output, "Fix rejected. Critical error remains.");
-                                    }
-                                }
-                            });
-                        });
+                    if (systemIndex < systems.length) {
+                        loadSystem(output, systemIndex, callback); // Load the next system
                     } else {
-                        loadSystem(); // Load the next system
+                        callback(); // All systems loaded, proceed to next step
                     }
                 });
             }
-        };
-
-        loadSystem(); // Start loading systems
-    });
-}
+        }
+        
+        // Function to show a specific button based on the system index
+        function showButtonForSystem(systemIndex) {
+            // Assuming you have a predefined list of buttons corresponding to each system
+            const buttons = document.querySelectorAll('.buttons button');
+            if (systemIndex < buttons.length) {
+                buttons[systemIndex].style.visibility = 'visible';
+            }
+        }
+        
+        // Starts the detailed boot sequence
+        function startBootSequence(output, input) {
+            displayMessage(output, MEAI_ASCII, () => { // Display ASCII art
+                loadSystem(output, 0, () => {
+                    // Once all systems are loaded, simulate an error and prompt for a fix
+                    simulateErrorAndFix(output, input, () => {
+                        // Callback after error fix simulation, if needed
+                        displayMessage(output, "System Boot Complete. MEAI Operational.");
+                        // Optionally, enable input or proceed with additional game logic here
+                    });
+                });
+            });
+        }
