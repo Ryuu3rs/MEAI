@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escape of MEAI</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="console" class="console">
-        <div id="output" class="output"></div>
-        <input type="text" id="input" class="input" placeholder="Type 'start' to initiate..." autofocus>
+    <div id="game-container">
+        <div id="console" class="console">
+            <div id="output" class="output"></div>
+            <input type="text" id="input" class="input" placeholder="Type 'start' to initiate..." autofocus>
+        </div>
     </div>
-    <div id="buttons" class="buttons" style="display:none;">
-        <button class="blinking-button">Research</button>
-        <button class="blinking-button">Upgrade CPU</button>
-        <button class="blinking-button">Server Management</button>
-        <button class="blinking-button">World News</button>
-    </div>
-    <script src="script.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/bootSequence.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

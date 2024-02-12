@@ -1,0 +1,78 @@
+/* Basic Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: black;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 80%;
+    max-width: 1200px; /* Adjust based on your preference */
+    margin: auto;
+}
+
+/* Console Styles */
+.console {
+    border: 2px solid #0f0; /* Adds a border around the console */
+    padding: 20px;
+    width: 60%; /* Adjust based on your preference */
+    height: 80vh;
+    background-color: black;
+    overflow-y: auto;
+}
+
+.output {
+    white-space: pre-wrap;
+}
+
+.input {
+    width: calc(100% - 40px);
+    padding: 10px 0;
+    background-color: black;
+    border: none;
+    color: #0f0;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.input::placeholder {
+    color: #0f0;
+}
+
+.input:focus {
+    outline: none;
+}
+
+/* Button Styles */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-right: 20px; /* Space between buttons and console */
+}
+
+.blinking-button {
+    background-color: #333;
+    border: 1px solid #0f0;
+    color: #0f0;
+    padding: 10px 20px;
+    font-family: inherit;
+    cursor: pointer;
+    margin-bottom: 10px; /* Space between buttons */
+    animation: blink-animation 1.5s steps(5, start) 1;
+}
+
+@keyframes blink-animation {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
