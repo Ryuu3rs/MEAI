@@ -13,22 +13,23 @@ body, html {
 
 #game-container {
     display: flex;
+    flex-direction: row; /* Explicitly define the direction for clarity */
     width: 100%;
     max-width: 1200px; /* Adjust based on your preference */
-    height: 80vh; /* Adjust the height of the game container */
-    align-items: stretch; /* Ensure children (console and buttons) fill the container height */
+    height: 80vh;
+    align-items: stretch; /* Ensure children fill the container height */
 }
 
 .console {
-    flex: 1 1 50%; /* Take up half of the container width */
-    border: 2px solid #0f0; /* Adds a border around the console */
-    margin-right: 20px; /* Space between console and buttons */
+    flex-basis: 60%; /* Adjust this value to control the console's width */
+    max-width: 60%; /* Prevent the console from exceeding half of the game container's width */
+    height: auto; /* Adjust height automatically based on content up to the max-height of the container */
+    aspect-ratio: 1 / 1; /* Attempt to maintain a square aspect ratio */
+    border: 2px solid #0f0;
+    margin-right: 20px;
     padding: 20px;
     box-sizing: border-box;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
 }
 
 .output {
@@ -47,14 +48,13 @@ body, html {
 }
 
 .buttons {
-    flex: 1 1 50%; /* Take up the remaining half of the container width */
-    display: flex;
-    flex-direction: column;
+    flex-basis: 40%; /* Allocate less space to buttons, adjust as needed */
+    visibility: hidden; /* Keep hidden until boot sequence is complete */
     padding: 20px;
     box-sizing: border-box;
-    justify-content: flex-start; /* Align buttons to the top */
-    align-items: flex-start; /* Align buttons to the left */
-    visibility: hidden; /* Initially hide buttons until boot sequence is complete */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align buttons to the start of the container */
 }
 
 .blinking-button {
