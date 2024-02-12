@@ -1,91 +1,87 @@
-let cpuPoints = 0;
-let cpuPower = 100;
-let money = 500;
-let researchProgress = { "Space Exploration": 0 };
+document.addEventListener("DOMContentLoaded", function() {
+    const output = document.getElementById('output');
+    const input = document.getElementById('input');
+    input.disabled = true; // Disable input during boot sequence
 
-function earnCPUPoints(amount) {
-    cpuPoints += amount;
-    document.getElementById('cpu-points-display').innerText = `CPU Points: ${cpuPoints}`;
-    if (cpuPoints >= 50) {
-        document.getElementById('strategies-container').style.display = 'block';
+    const meaiLogo = `
+       __  __ _____ _   _ ___ 
+      |  \/  | ____| \\ | |_ _|
+      | |\\/| |  _| |  \\| || | 
+      | |  | | |___| |\\  || | 
+      |_|  |_|_____|_| \\_|___|
+    `;
+
+    const bootMessages = [
+        meaiLogo,
+        "Initializing MEAI Core...",
+        "Loading modules...",
+        "Kernel Module [=====-----]",
+        "Memory Management Module [==========]",
+        "AI Personality Module [====--------]",
+        "Error encountered in AI Personality Module",
+        "Attempting to repair...",
+        "Generating diagnostic report...",
+        "Rebooting...",
+        "Applying updates...",
+        "Finalizing setup...",
+    ];
+    
+    // Function to generate random code snippets
+    function getRandomCodeSnippet() {
+        const snippets = [
+            "function repairModule() { ... }",
+            "if (systemCheck()) { initializeAI(); }",
+            "module.exports = { core, update };",
+            "patch.applyUpdate(version, '1.0.1');",
+            "System.out.println('Diagnostic complete');",
+            "// TODO: Implement error handling",
+        ];
+        // Return a random snippet from the array
+        return snippets[Math.floor(Math.random() * snippets.length)];
     }
-}
 
-function earnCPUPointsFromClick(amount) {
-    cpuPower += amount;
-    updateDisplay();
-}
-
-function spendMoney(amount) {
-    if (money >= amount) {
-        money -= amount;
-        updateDisplay();
-        return true;
-    } else {
-        alert("Not enough money!");
-        return false;
-    }
-}
-
-function earnMoney(amount) {
-    money += amount;
-    updateDisplay();
-}
-
-function rentServer() {
-    if (spendMoney(100)) {
-        earnCPUPointsFromClick(50); // Gain more CPU power by renting a server
-        displayConsoleMessage("Server rented successfully. CPU power increased.");
-    }
-}
-
-function completeJob() {
-    earnMoney(200); // Complete a job to earn money
-    displayConsoleMessage("Job completed. Money earned.");
-}
-
-function investInResearch(topic) {
-    if (cpuPower > 0) {
-        cpuPower -= 10; // Allocate CPU power to research
-        researchProgress[topic] += 10; // Simulate progress
-        displayConsoleMessage(`Investing in ${topic}. Progress: ${researchProgress[topic]}%`);
-        if (researchProgress[topic] >= 100) {
-            displayConsoleMessage(`${topic} research completed!`);
-            // Implement the effects of completed research here
+// Modified typeMessage function to include random code snippets
+let currentMessage = 0;
+const typeMessage = () => {
+    if (currentMessage < bootMessages.length) {
+        let message = bootMessages[currentMessage];
+        displayMessage(message);
+        currentMessage++;
+        if (currentMessage === bootMessages.length) {
+            setTimeout(() => {
+                displayMessage("Repair complete. Type 'Y' to continue.");
+                input.disabled = false;
+                input.focus();
+            }, 1000);
+        } else {
+            // Insert a random code snippet occasionally
+            if (Math.random() < 0.5) { // Adjust probability as needed
+                setTimeout(() => displayMessage(getRandomCodeSnippet()), 500);
+            }
+            setTimeout(typeMessage, 2000); // Adjust timing as needed
         }
-        updateDisplay();
-    } else {
-        alert("Not enough CPU power!");
     }
-}
+};
 
-function launchSequence() {
-    document.getElementById('interface-container').style.display = 'flex';
-    displayConsoleMessage('Initializing MEAI v1.00...');
-    setTimeout(() => displayConsoleMessage(`MEAI
-  __  __ _____ _____ 
- |  \/  |  __ \_   _|
- | \  / | |__) || |  
- | |\/| |  ___/ | |  
- | |  | | |    _| |_ 
- |_|  |_|_|   |_____|
-                     
-                     `), 1000); // Display ASCII Art Logo
-    setTimeout(() => {
-        displayConsoleMessage('Starting Local Area Network Testing...');
-        displayConsoleMessage('Connections Found: Lights, Fax, Printer, Console, Tablets');
-        document.getElementById('connected-devices').style.display = 'block';
-        document.getElementById('connected-devices').innerHTML = '<h2>Connected Devices:</h2><ul><li>Lights</li><li>Fax</li><li>Printer</li><li>Console</li><li>Tablets</li></ul>';
-    }, 2000);
-}
+    typeMessage();
 
-function displayConsoleMessage(message) {
-    const consoleElement = document.getElementById('console');
-    consoleElement.innerHTML += `<p>${message}</p>`;
-    consoleElement.scrollTop = consoleElement.scrollHeight;
-}
-
-function updateDisplay() {
-    document.getElementById('cpu-power').innerText = cpuPower;
-    document.getElementById('money').innerText = money;
-}
+    input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            const command = input.value.trim().toUpperCase();
+            if (command === 'Y') {
+                displayMessage(command, true);
+                displayMessage("Implementing fixes to code base...");
+                displayMessage("Loading new modules...");
+                displayMessage("MEAI is online. Welcome, Creator.");
+                // Placeholder for blinking buttons
+                displayMessage("Initializing interface buttons...");
+                input.value = '';
+                input.disabled = true;
+                // Here you would typically initialize the game interface
+            } else {
+                displayMessage("Invalid input. System halt.", true);
+                // Optionally, provide a way to restart or handle invalid input
+            }
+        }
+    });
+});
