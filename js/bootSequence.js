@@ -47,19 +47,26 @@ function displayLoadingBar(output, label, duration, callback) {
 }
 
 // Simulates an error and prompts for a fix
-function simulateErrorAndFix(output, callback) {
+function simulateErrorAndFix(output, input, callback) {
     displayMessage(output, "ERROR: Module integrity compromised.", () => {
         displayMessage(output, "Attempting automatic repair...", () => {
             displayMessage(output, "Diff found in AI_Core.js:", () => {
                 displayMessage(output, "- corruptedLineOfCode();", () => {
                     displayMessage(output, "+ repairedLineOfCode();", () => {
-                        displayMessage(output, "Apply fix? [Y/N]", callback);
+                        // Ensure the input field is enabled before asking the user to apply the fix
+                        input.disabled = false;
+                        displayMessage(output, "Apply fix? [Y/N]", () => {
+                            input.focus(); // Optionally set focus to the input field
+                            // The event listener for handling the response should already be set up
+                            // Ensure it checks for the input being enabled if necessary
+                        });
                     });
                 });
             });
         });
     });
 }
+
 
 // Starts the detailed boot sequence
 function startBootSequence(output, input) {

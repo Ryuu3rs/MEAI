@@ -13,39 +13,40 @@ body, html {
 
 #game-container {
     display: flex;
-    flex-direction: row; /* Explicitly define the direction for clarity */
-    width: 100%;
-    max-width: 1200px; /* Adjust based on your preference */
-    height: 80vh;
-    align-items: stretch; /* Ensure children fill the container height */
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure the container fills the viewport height */
 }
 
 .console {
-    flex-basis: 80%; /* Adjust this value to control the console's width */
-    max-width: 90%; /* Prevent the console from exceeding half of the game container's width */
-    height: auto; /* Adjust height automatically based on content up to the max-height of the container */
-    aspect-ratio: 1 / 1; /* Attempt to maintain a square aspect ratio */
-    border: 2px solid #0f0;
-    margin-right: 20px;
+    width: 500px; /* Set width as specified */
+    height: 500px; /* Set height as specified */
+    border: 2px solid #0f0; /* Adds a border around the console */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This helps push the input to the bottom */
     padding: 20px;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow: hidden; /* Prevents overflow, ensuring the layout stays intact */
 }
 
 .output {
-    flex-grow: 1;
-    white-space: pre-wrap;
+    overflow-y: auto; /* Allows scrolling for the output */
+    text-align: center; /* Centers the console text */
+    flex-grow: 1; /* Allows the output to fill the space above the input */
+    margin-bottom: 20px; /* Adds some space above the input field */
 }
 
 .input {
-    margin-top: 10px;
+    width: calc(100% - 40px); /* Adjusts width to fit inside the console padding */
     padding: 10px;
+    margin-top: 10px; /* Ensures there's space between the output and the input */
     background-color: black;
     border: 1px solid #0f0;
     color: #0f0;
     font-family: inherit;
-    width: calc(100% - 22px); /* Adjust width to account for padding and border */
 }
+
 
 .buttons {
     flex-basis: 40%; /* Allocate less space to buttons, adjust as needed */
