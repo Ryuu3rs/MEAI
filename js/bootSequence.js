@@ -1,4 +1,13 @@
-// Example ASCII Art for MEAI
+/**
+ * bootSequence.js
+ * Version 1.1.0
+ * Implements a detailed boot sequence for an AI system, including system initialization,
+ * dynamic loading bars, simulated error detection, and user interaction for error fixing.
+ */
+
+/**
+ * ASCII Art for MEAI.
+ */
 const MEAI_ASCII = `
    __  __ _____ ___ ___ _   _ ___ 
   |  \/  | ____|_ _/ _ \\ | | |_ _|
@@ -7,7 +16,12 @@ const MEAI_ASCII = `
   |_|  |_|_____|___\\___/ \\___/___|
 `;
 
-// Utility function to display messages letter by letter
+/**
+ * Displays a message in the output area, simulating typing effect.
+ * @param {HTMLElement} output - The output element where messages are displayed.
+ * @param {string} message - The message to display.
+ * @param {Function} callback - Optional callback to execute after the message is displayed.
+ */
 function displayMessage(output, message, callback) {
     let i = 0;
     const interval = setInterval(() => {
@@ -16,79 +30,68 @@ function displayMessage(output, message, callback) {
             i++;
         } else {
             clearInterval(interval);
-            output.innerHTML += '\n'; // Move to the next line after the message is complete
-            if (callback) callback(); // Proceed to the next function if provided
+            output.innerHTML += '\n';
+            if (callback) callback();
         }
-        output.scrollTop = output.scrollHeight; // Keep scrolling to the bottom
-    }, 20); // Speed of text appearance
+        output.scrollTop = output.scrollHeight;
+    }, 20);
 }
 
-// Function to display a loading bar with a percentage
+/**
+ * Simulates the loading of a system with a dynamic progress bar.
+ * @param {HTMLElement} output - The output element where the loading bar is displayed.
+ * @param {string} label - The name of the system being loaded.
+ * @param {number} duration - The duration for the loading simulation in milliseconds.
+ * @param {Function} callback - Callback to execute after loading is complete.
+ */
 function displayLoadingBar(output, label, duration, callback) {
     output.innerHTML += label + " [";
     let progress = 0;
-    const intervalTime = duration / 100; // Duration divided by 100 to increment every 1%
+    const intervalTime = duration / 100;
     const interval = setInterval(() => {
         if (progress <= 100) {
-            let bar = '='.repeat(progress / 2) + '-'.repeat((100 - progress) / 2); // Simplified loading bar
+            let bar = '='.repeat(progress / 2) + '-'.repeat((100 - progress) / 2);
             output.innerHTML = output.innerHTML.replace(/\[=*\-*\] \d*%?/, `[${bar}] ${progress}%`);
             progress++;
         } else {
             clearInterval(interval);
-            output.innerHTML += "]\n"; // Close the loading bar
-            if (callback) callback(); // Call the next step
+            output.innerHTML += "]\n";
+            if (callback) callback();
         }
         output.scrollTop = output.scrollHeight;
     }, intervalTime);
 }
 
-// Simulates an error and prompts for a fix
-function simulateErrorAndFix(output, input, callback) {
-    input.disabled = false; // Ensure the input field is enabled before asking the user to apply the fix
+/**
+ * Simulates an error and prompts the user for a decision to fix it.
+ * @param {HTMLElement} output - The output element where messages are displayed.
+ * @param {HTMLElement} input - The input element to be enabled for user response.
+ */
+function simulateErrorAndFix(output, input, onSuccess, onFailure) {
+    // Enable input for user interaction
+    input.disabled = false;
+    input.focus(); // Focus on the input field for user response
+
+    // Display the simulated error and prompt for user interaction
     displayMessage(output, "ERROR: Module integrity compromised.", () => {
         displayMessage(output, "Attempting automatic repair...", () => {
-            displayMessage(output, "Diff found in AI_Core.js:", () => {
-                displayMessage(output, "- corruptedLineOfCode();", () => {
-                    displayMessage(output, "+ repairedLineOfCode();", () => {
-                        displayMessage(output, "Apply fix? [Y/N]", () => {
-                            input.focus(); // Optionally set focus to the input field
-                            if (callback) callback();
-                        });
-                    });
-                });
+            displayMessage(output, "Critical failure detected. AUTO repair needed. Apply fix? [Y/N]", () => {
+                // Wait for user input in main.js, not here
             });
         });
     });
-}
 
-// Function to show a specific button based on the system index
-function showButtonForSystem(systemIndex) {
-    const buttons = document.querySelectorAll('.buttons button');
-    if (systemIndex < buttons.length) {
-        buttons[systemIndex].style.visibility = 'visible';
-    }
-}
+    // Listen for user input in main.js to decide onSuccess or onFailure actions
 
-// Function to simulate the loading of each system with a progress bar
-function loadSystem(output, systems, currentIndex, callback) {
-    if (currentIndex >= systems.length) {
-        callback(); // All systems loaded, call the final callback
-        return;
-    }
 
-    const system = systems[currentIndex];
-    console.log(`Loading: ${system}`); // Debugging: Log which system is loading
-    const duration = Math.random() * (5000 - 1000) + 1000; // Random duration for the loading bar
-
-    displayLoadingBar(output, system, duration, () => {
-        // Once the loading bar for the current system completes, move to the next one
-        loadSystem(output, systems, currentIndex + 1, callback);
-    });
-}
-
-// Starts the detailed boot sequence
+/**
+ * Initiates the boot sequence, including system initializations and error simulation.
+ * @param {HTMLElement} output - The output element where the boot sequence is displayed.
+ * @param {HTMLElement} input - The input element for user responses.
+ */
 function startBootSequence(output, input) {
-    displayMessage(output, MEAI_ASCII, () => { // Display ASCII art
+    displayMessage(output, MEAI_ASCII, () => {
+        // Define the sequence of system initializations
         const systems = [
             "Boot Loader Initialization",
             "Kernel Module Loading",
@@ -107,13 +110,38 @@ function startBootSequence(output, input) {
             "Machine Learning Core Activation",
             "Quantum Encryption Module Boot",
             "Interstellar Navigation Systems Online",
-            "Temporal Anomaly Detectors Calibration"
+            "Temporal Anomaly Detectors Calibration",
         ];
-        loadSystem(output, 0, systems, () => {
-            simulateErrorAndFix(output, input, () => {
-                displayMessage(output, "System Boot Complete. MEAI Operational.");
-                // Optionally, enable input or proceed with additional game logic here
-            });
-        });
+
+        // Sequentially load each system with a progress bar
+        let currentIndex = 0;
+        const loadNextSystem = () => {
+            if (currentIndex >= systems.length) {
+                // All systems loaded successfully, proceed to onSuccess callback
+                onSuccess();
+                return;
+            }
+
+            if (currentIndex === Math.floor(systems.length / 2)) {
+                // Simulate an error at the midpoint of the boot sequence
+                displayMessage(output, "ERROR: Module integrity compromised.", () => {
+                    displayMessage(output, "Attempting automatic repair...", () => {
+                        displayMessage(output, "Critical failure detected. AUTO repair needed. Apply fix? [Y/N]", () => {
+                            input.disabled = false; // Enable input for user interaction
+                            input.focus(); // Focus on the input field for user response
+                            // User response handling is expected to be implemented in main.js
+                        });
+                    });
+                });
+            } else {
+                const system = systems[currentIndex];
+                displayLoadingBar(output, system, 2000, () => {
+                    currentIndex++;
+                    loadNextSystem();
+                });
+            }
+        };
+
+        loadNextSystem();
     });
 }

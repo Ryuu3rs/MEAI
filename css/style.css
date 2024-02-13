@@ -1,83 +1,66 @@
+/**
+ * style.css
+ * Version 1.0.0
+ * Styles for the AI boot sequence project, providing a terminal-like appearance
+ * and responsive design for various components.
+ */
+
 /* Basic Reset */
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: black;
+    background-color: #000; /* Terminal background color */
+    color: #0f0; /* Terminal text color */
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Output Console Styling */
+#output {
+    background-color: #000;
     color: #0f0;
     font-family: 'Courier New', Courier, monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#game-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Ensure the container fills the viewport height */
-    max-width: 80%; /* Adjust based on your preference */
-}
-
-.console {
-    width: 500px; /* Set width as specified */
-    height: 500px; /* Set height as specified */
-    border: 2px solid #0f0; /* Adds a border around the console */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Helps push the input to the bottom */
-    padding: 20px;
-    box-sizing: border-box;
-    overflow: hidden; /* Prevents overflow, ensuring the layout stays intact */
-}
-
-.output {
-    overflow-y: auto; /* Allows scrolling for the output */
-    text-align: center; /* Centers the console text */
-    flex-grow: 1; /* Allows the output to fill the space above the input */
-    margin-bottom: 20px; /* Adds some space above the input field */
-}
-
-.input {
-    width: calc(100% - 40px); /* Adjusts width to fit inside the console padding */
     padding: 10px;
-    margin-top: 10px; /* Ensures there's space between the output and the input */
-    background-color: black;
-    border: 1px solid #0f0;
-    color: #0f0;
-    font-family: inherit;
+    height: 300px; /* Adjust based on your layout */
+    overflow-y: auto;
+    white-space: pre-wrap;
+    border: 1px solid #333;
+    margin: 20px; /* Spacing around the console */
 }
 
+/* Input Field Styling */
+#input {
+    background-color: #222;
+    color: #0f0;
+    border: 1px solid #333;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 5px;
+    width: calc(100% - 42px); /* Adjust padding and border */
+    margin: 20px; /* Align with the output console margin */
+}
+
+/* Button Styling */
 .buttons {
-    flex-basis: 40%; /* Allocate less space to buttons, adjust as needed */
-    visibility: hidden; /* Keep hidden until boot sequence is complete */
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align buttons to the start of the container */
+    visibility: hidden; /* Initially hidden, shown after boot sequence */
+    margin: 20px; /* Align with the output console margin */
 }
 
-button, .blinking-button {
+.buttons button {
     background-color: #333;
-    border: 1px solid #0f0;
-    color: #0f0;
-    padding: 10px 20px;
-    font-family: inherit;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    margin-top: 5px;
     cursor: pointer;
-    margin-bottom: 10px; /* Space between buttons */
-    width: 100%; /* Make buttons full width of their container */
-    text-align: left;
-    visibility: hidden; /* Initially hidden, to be shown during the boot sequence */
 }
 
-@keyframes blink-animation {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
+.buttons button:hover {
+    background-color: #444;
 }
 
-.blinking-button {
-    animation: blink-animation 1.5s steps(5, start) 1; /* Blink effect */
-    visibility: visible; /* Ensure blinking buttons are visible when they should blink */
+/* Responsive Design Adjustments */
+@media (max-width: 600px) {
+    #output, #input {
+        width: calc(100% - 40px); /* Adjust for smaller screens */
+    }
 }

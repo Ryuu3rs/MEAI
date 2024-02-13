@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escape of MEAI</title>
+    <title>AI Boot Sequence</title>
+    <!-- Update the href attribute to point to the CSS file in the css folder -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="game-container">
+    <!-- Main container for the boot sequence interface -->
+    <div id="main-container">
+        <!-- Output area where boot sequence messages will be displayed -->
+        <div id="output" aria-live="polite"></div> <!-- ARIA attribute for accessibility -->
+        <!-- Input field for user commands and responses -->
+        <input type="text" id="input" placeholder="Type 'START' to initiate boot sequence..." />
+        <!-- Container for buttons that may be shown after the boot sequence -->
         <div class="buttons">
-            <!-- Example buttons for each system module -->
-            <button style="visibility: hidden;">Boot Loader</button>
-            <button style="visibility: hidden;">Kernel Module</button>
-            <button style="visibility: hidden;">Security Protocols</button>
-            <!-- Add more buttons corresponding to each system in your JavaScript array -->
-            <!-- Ensure the number and order of buttons match the systems array -->
-        </div>
-        <div id="console" class="console">
-            <div id="output" class="output"></div>
-            <input type="text" id="input" class="input" placeholder="Type 'start' to initiate..." autofocus>
+            <!-- Example button (add more as needed) -->
+            <button onclick="alert('Button clicked!')">Example Button</button>
         </div>
     </div>
-    <script src="js/utils.js"></script>
-    <script src="js/bootSequence.js"></script>
-    <script src="js/main.js"></script>
+
+    <!-- JavaScript files -->
+    <!-- Update the src attributes to point to the JavaScript files in the js folder -->
+    <script src="js/utils.js"></script> <!-- Utility functions -->
+    <script src="js/bootSequence.js"></script> <!-- Boot sequence logic -->
+    <script src="js/main.js"></script> <!-- Main script for handling user interaction -->
 </body>
 </html>
