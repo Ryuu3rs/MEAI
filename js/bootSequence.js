@@ -1,6 +1,6 @@
 /**
  * bootSequence.js
- * Version 1.1.0
+ * Version 1.1.1
  * Implements a detailed boot sequence for an AI system, including system initialization,
  * dynamic loading bars, simulated error detection, and user interaction for error fixing.
  */
@@ -90,8 +90,10 @@ function simulateErrorAndFix(output, input, onSuccess, onFailure) {
  * @param {HTMLElement} input - The input element for user responses.
  */
 function startBootSequence(output, input) {
+    // Temporarily disable input to prevent user interaction during the sequence
+    input.disabled = true;
+
     displayMessage(output, MEAI_ASCII, () => {
-        // Define the sequence of system initializations
         const systems = [
             "Boot Loader Initialization",
             "Kernel Module Loading",
@@ -113,35 +115,42 @@ function startBootSequence(output, input) {
             "Temporal Anomaly Detectors Calibration",
         ];
 
-        // Sequentially load each system with a progress bar
-        let currentIndex = 0;
-        const loadNextSystem = () => {
-            if (currentIndex >= systems.length) {
-                // All systems loaded successfully, proceed to onSuccess callback
-                onSuccess();
-                return;
-            }
+        let currentSystemIndex = 0;
 
-            if (currentIndex === Math.floor(systems.length / 2)) {
-                // Simulate an error at the midpoint of the boot sequence
-                displayMessage(output, "ERROR: Module integrity compromised.", () => {
-                    displayMessage(output, "Attempting automatic repair...", () => {
-                        displayMessage(output, "Critical failure detected. AUTO repair needed. Apply fix? [Y/N]", () => {
-                            input.disabled = false; // Enable input for user interaction
-                            input.focus(); // Focus on the input field for user response
-                            // User response handling is expected to be implemented in main.js
-                        });
+        // Function to load the next system in the sequence
+        const loadNextSystem = () => {
+            if (currentSystemIndex < systems.length) {
+                const system = systems[currentSystemIndex];
+                displayMessage(output, `${system}...`, () => {
+                    displayLoadingBar(output, system, 1000, () => {
+                        currentSystemIndex++;
+                        // Check if it's time to simulate the error
+                        if (currentSystemIndex === Math.floor(systems.length / 2)) {
+                            simulateErrorAndPromptForFix();
+                        } else {
+                            loadNextSystem();
+                        }
                     });
                 });
             } else {
-                const system = systems[currentIndex];
-                displayLoadingBar(output, system, 2000, () => {
-                    currentIndex++;
-                    loadNextSystem();
-                });
+                // All systems loaded successfully, or continue after fixing the error
+                displayMessage(output, "System Boot Complete. MEAI Operational.");
+                input.disabled = false; // Re-enable input after the sequence
             }
         };
 
-        loadNextSystem();
+        // Function to simulate an error and prompt the user for a fix
+        const simulateErrorAndPromptForFix = () => {
+            displayMessage(output, "ERROR: Module integrity compromised. Attempting automatic repair...", () => {
+                displayMessage(output, "Critical failure detected. AUTO repair needed. Apply fix? [Y/N]", () => {
+                    input.disabled = false; // Enable input for user decision
+                    input.focus();
+                    // User response handling is expected to be set up in main.js
+                });
+            });
+        };
+
+        loadNextSystem(); // Start loading systems
     });
 }
+
