@@ -121,6 +121,7 @@ function startBootSequence(output, input) {
         const loadNextSystem = () => {
             if (currentSystemIndex < systems.length) {
                 const system = systems[currentSystemIndex];
+                system = system.concat(" | Debug: ",currentSystemIndex," | ",Math.floor(systems.length / 2));
                 displayMessage(output, `${system}...`, () => {
                     displayLoadingBar(output, system, 1000, () => {
                         currentSystemIndex++;
