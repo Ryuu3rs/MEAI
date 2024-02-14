@@ -125,7 +125,7 @@ function startBootSequence(output, input) {
                     displayLoadingBar(output, system, 1000, () => {
                         currentSystemIndex++;
                         // Check if it's time to simulate the error
-                        if (currentSystemIndex === Math.floor(systems.length / 2)) {
+                        if (currentSystemIndex == Math.floor(systems.length / 2)) {
                             simulateErrorAndPromptForFix();
                         } else {
                             loadNextSystem();
