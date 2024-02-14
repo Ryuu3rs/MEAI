@@ -80,7 +80,7 @@ function simulateErrorAndFix(output, input, onSuccess, onFailure) {
             });
         });
     });
-
+}
     // Listen for user input in main.js to decide onSuccess or onFailure actions
 
 
@@ -121,7 +121,6 @@ function startBootSequence(output, input) {
         const loadNextSystem = () => {
             if (currentSystemIndex < systems.length) {
                 const system = systems[currentSystemIndex];
-                system = system.concat(" | Debug: ",currentSystemIndex," | ",Math.floor(systems.length / 2));
                 displayMessage(output, `${system}...`, () => {
                     displayLoadingBar(output, system, 1000, () => {
                         currentSystemIndex++;
